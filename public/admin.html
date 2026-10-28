@@ -1,0 +1,359 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #0b1425;
+            color: #dce7fa;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            height: 85px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 0 34px;
+            background: #17243a;
+            border-bottom: 1px solid #263750;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            color: #4b7dff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        .header h1 {
+            font-size: 30px;
+            font-weight: 600;
+            color: #f4f7ff;
+        }
+
+        /* Table */
+        .table-container {
+            margin: 36px 32px;
+            border: 1px solid #293a55;
+            border-radius: 9px;
+            overflow: hidden;
+            background: #111d31;
+        }
+
+        .table-scroll {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 900px;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        thead {
+            background: #1a2940;
+        }
+
+        th {
+            padding: 20px 30px;
+            font-size: 17px;
+            font-weight: 600;
+            color: #c6d8f5;
+            white-space: nowrap;
+            border-bottom: 1px solid #293a55;
+        }
+
+        td {
+            padding: 13px 30px;
+            height: 60px;
+            font-size: 16px;
+            white-space: nowrap;
+            border-bottom: 1px solid transparent;
+        }
+
+        tbody tr {
+            background: #111d31;
+            transition: background 0.2s ease;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #19263b;
+        }
+
+        tbody tr:hover {
+            background: #22334d;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Role badges */
+        .role {
+            display: inline-block;
+            padding: 6px 13px;
+            border-radius: 12px;
+            background: #30425e;
+            color: #d6e4fb;
+            font-size: 15px;
+        }
+
+        .role.admin {
+            background: #233f91;
+            color: #72a7ff;
+        }
+
+        /* Status badges */
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 15px;
+        }
+
+        .status::before {
+            content: "";
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .status.active {
+            background: #15363c;
+            color: #37e4b7;
+        }
+
+        .status.inactive {
+            background: #382b3b;
+            color: #ff747c;
+        }
+
+        
+/* Export buttons */
+.export-actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 12px;
+    margin: 30px 32px -16px;
+    direction: rtl;
+}
+
+.export-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 18px;
+    border: 1px solid #344966;
+    border-radius: 8px;
+    background: #17243a;
+    color: #e5edfc;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.export-btn:hover {
+    background: #263a57;
+    transform: translateY(-1px);
+}
+
+.csv-btn {
+    border-color: #216b55;
+    color: #54e0ad;
+}
+
+.pdf-btn {
+    border-color: #344f91;
+    color: #91b4ff;
+}
+
+/* PDF print layout */
+@media print {
+    @page {
+        size: landscape;
+        margin: 12mm;
+    }
+
+    body {
+        background: white !important;
+        color: black !important;
+        font-family: Tahoma, Arial, sans-serif;
+        min-height: auto;
+    }
+
+    .header {
+        background: white !important;
+        color: black !important;
+        border-bottom: 1px solid #ccc;
+        padding: 0 0 12px;
+        height: auto;
+    }
+
+    .header h1 {
+        color: black !important;
+        font-size: 20px;
+    }
+
+    .logo,
+    .export-actions {
+        display: none !important;
+    }
+
+    .table-container {
+        margin: 15px 0 0 !important;
+        overflow: visible !important;
+        border: 1px solid #ccc;
+        background: white !important;
+    }
+
+    .table-scroll {
+        overflow: visible !important;
+    }
+
+    table {
+        min-width: 0 !important;
+        width: 100% !important;
+        font-size: 11px;
+    }
+
+    thead {
+        display: table-header-group;
+        background: #e8edf5 !important;
+    }
+
+    th {
+        color: black !important;
+        background: #e8edf5 !important;
+        padding: 10px 8px;
+        border: 1px solid #ccc;
+    }
+
+    td {
+        color: black !important;
+        background: white !important;
+        padding: 8px;
+        height: auto;
+        border: 1px solid #ccc !important;
+        white-space: normal;
+    }
+
+    tr {
+        break-inside: avoid;
+    }
+}
+
+@media (max-width: 768px) {
+    .export-actions {
+        margin: 24px 16px 0;
+        flex-wrap: wrap;
+    }
+
+    .export-btn {
+        flex: 1;
+    }
+}
+
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                height: 72px;
+                padding: 0 20px;
+            }
+
+            .header h1 {
+                font-size: 25px;
+            }
+
+            .table-container {
+                margin: 24px 16px;
+            }
+
+            th, td {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <svg viewBox="0 0 40 40" fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 3L35 9V19C35 28 29 34 20 38C11 34 5 28 5 19V9L20 3Z"
+                      stroke="currentColor" stroke-width="3.5"
+                      stroke-linejoin="round"/>
+                <path d="M20 10L28 13V19C28 24 25 28 20 31C15 28 12 24 12 19V13L20 10Z"
+                      fill="currentColor" opacity="0.65"/>
+            </svg>
+        </div>
+        <h1>لیسات افراد شرکت کننده در همایش</h1>
+    </header>
+
+
+
+
+    <main class="table-container">
+        <div class="table-scroll">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>نام و نام خانوادگی</th>
+                        <th>شماره تلفن</th>
+                        <th>نقش</th>
+                        <th>نام شرکت</th>
+                    </tr>
+                </thead>
+
+                <tbody id="table-body">
+
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <div class="export-actions">
+    <button type="button" class="export-btn csv-btn" onclick="exportCSV()">
+        <span>⇩</span> خروجی CSV
+    </button>
+
+    <button type="button" class="export-btn pdf-btn" onclick="exportPDF()">
+        <span>⇩</span> خروجی PDF
+    </button>
+</div>
+
+    <script src="./js/admin.js"></script>
+
+</body>
+</html>

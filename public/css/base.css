@@ -1,0 +1,145 @@
+:root {
+  font-family: "Estedad", Tahoma, sans-serif;
+  color: #202321;
+  background: #f7f5ef;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --ink: #17191b;
+  --coal: #202321;
+  --paper: #f7f5ef;
+  --paper-deep: #eeece4;
+  --gold: #f3b51b;
+  --gold-soft: #d5be91;
+  --graphite: #3c4547;
+  --muted: #6f726e;
+  --hairline: #17191b20;
+  scroll-behavior: smooth;
+  scroll-padding-top: 72px;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { width: 100%; min-width: 320px; min-height: 100%; margin: 0; }
+body { background: var(--paper); color: var(--ink); font-weight: 400; overflow-x: clip; }
+button, input { font: inherit; }
+button, a, input { touch-action: manipulation; }
+img, svg { max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+h1, h2, h3, p { margin-top: 0; }
+.wrap { width: min(1200px, calc(100% - 72px)); margin-inline: auto; }
+.read-progress { position: fixed; z-index: 50; inset: 0 0 auto; height: 2px; background: var(--gold); transform: scaleX(var(--page-progress, 0)); transform-origin: right; pointer-events: none; }
+
+@media (max-width: 680px) {
+  :root { scroll-padding-top: 58px; }
+  .wrap { width: calc(100% - 36px); }
+  .read-progress { height: 2px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+
+#role-picker .role-trigger option {
+    background-color: #000;
+    color: #fff;
+}
+
+#role-picker .role-trigger option:disabled {
+    color: #888;
+}
+
+#role-picker .role-trigger option:checked {
+    background-color: #1d4ed8;
+    color: #fff;
+}
+
+
+
+/* منوی سفارشی */
+#role-picker .custom-options {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 100%;
+    padding: 6px;
+    background: #050505;
+    border: 1px solid #292929;
+    border-radius: 14px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+    z-index: 9999;
+    max-height: 260px;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+/* هر گزینه */
+#role-picker .custom-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    padding: 13px 14px;
+    border: none;
+    border-radius: 9px;
+    background: transparent;
+    color: #f5f5f5;
+    font-family: inherit;
+    font-size: 14px;
+    text-align: right;
+    cursor: pointer;
+    transition: background 0.18s ease, color 0.18s ease;
+}
+
+/* هاور */
+#role-picker .custom-option:hover,
+#role-picker .custom-option:focus-visible {
+    background: #2563eb;
+    color: #fff;
+    outline: none;
+}
+
+/* گزینه انتخاب‌شده */
+#role-picker .custom-option.selected {
+    background: #172554;
+    color: #93c5fd;
+}
+
+/* گزینه انتخاب‌شده هنگام هاور */
+#role-picker .custom-option.selected:hover {
+    background: #2563eb;
+    color: #fff;
+}
+
+/* تیک انتخاب */
+#role-picker .option-check {
+    opacity: 0;
+    color: #60a5fa;
+    font-size: 16px;
+}
+
+#role-picker .custom-option.selected .option-check {
+    opacity: 1;
+}
+
+/* گزینه غیرفعال */
+#role-picker .custom-option.disabled {
+    color: #777;
+    cursor: default;
+}
+
+#role-picker .custom-option.disabled:hover {
+    background: transparent;
+    color: #777;
+}
+
+/* اسکرول‌بار */
+#role-picker .custom-options::-webkit-scrollbar {
+    width: 6px;
+}
+
+#role-picker .custom-options::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 10px;
+}
